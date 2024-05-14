@@ -1,2 +1,5 @@
 ﻿Products文件夹是我们的feature folder，里面放的是针对product的一系列操作
 CreateProductEndpoint 相当于是controller，而CreateProductHandler则相当于是service/repository
+
+
+Catalog.API文件就相当于是js项目的package.json, 所有的package/依赖，dependencies，reference都会在这里吗管理

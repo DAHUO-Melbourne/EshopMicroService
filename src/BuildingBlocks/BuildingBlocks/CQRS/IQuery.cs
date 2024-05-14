@@ -10,7 +10,7 @@ namespace BuildingBlocks.CQRS
 
     // 定义一个通用的查询接口，继承自 IRequest<TResponse>
     public interface IQuery<out TResponse> : IRequest<TResponse> where TResponse: notnull
-        //  where TResponse: notnull意思是TResponse要满足notnull的约束，TResponse的值不能为null，也就是返回值不能为空
+        //  where TResponse: notnull意思是TResponse要满足notnull的约束，TResponse的值不能为null，也就是返回值不能为空,where相当于filter的作用
     {
     }
 }
