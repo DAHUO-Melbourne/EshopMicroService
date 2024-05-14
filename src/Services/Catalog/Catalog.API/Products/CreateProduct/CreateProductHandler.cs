@@ -27,6 +27,10 @@ namespace Catalog.API.Products.CreateProduct
     }
 }
 
+/**
+ * Handler文件相当于是Service文件
+ */
+
 
 /**
  * record其实相当于一种简化的定义class的方式。record就等价于class。上面的record CreateProductCommand其实相当于是说：定义了一个名字叫CreateProductCommand的class
