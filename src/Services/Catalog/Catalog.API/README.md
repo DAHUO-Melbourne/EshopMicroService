@@ -1,0 +1,2 @@
+﻿Products文件夹是我们的feature folder，里面放的是针对product的一系列操作
+CreateProductEndpoint 相当于是controller，而CreateProductHandler则相当于是service/repository
