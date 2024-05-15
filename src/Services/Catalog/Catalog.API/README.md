@@ -3,3 +3,7 @@ CreateProductEndpoint 相当于是controller，而CreateProductHandler则相当�
 
 
 Catalog.API文件就相当于是js项目的package.json, 所有的package/依赖，dependencies，reference都会在这里吗管理
+
+MediatR用来管理command/query的service处理逻辑
+Carter是用来简化endpoint的
+Mapster是用来将object map到MediatR的ICommand上的
