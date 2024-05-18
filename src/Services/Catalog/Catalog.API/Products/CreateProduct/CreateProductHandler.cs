@@ -1,12 +1,9 @@
-﻿using BuildingBlocks.CQRS;
-using Catalog.API.Models;
-using MediatR;
-
-namespace Catalog.API.Products.CreateProduct
+﻿namespace Catalog.API.Products.CreateProduct
 {
     public record CreateProductCommand(string Name, List<string> Category, string Description, string ImageFile, decimal Price): ICommand<CreateProductResult>;
     public record CreateProductResult(Guid Id);
-    internal class CreateProductCommandHandler : ICommandHandler<CreateProductCommand, CreateProductResult>
+    internal class CreateProductCommandHandler(IDocumentSession session) : ICommandHandler<CreateProductCommand, CreateProductResult>
+    // IDocumentSession是Marten的一个包，功能是和postgresql数据库进行交互，是数据库的一种抽象表示
     {
         public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
         {
@@ -22,7 +19,12 @@ namespace Catalog.API.Products.CreateProduct
                 ImageFile = command.ImageFile,
                 Price = command.Price,
             };
-            return new CreateProductResult(Guid.NewGuid());
+
+            session.Store(product);
+            await session.SaveChangesAsync(cancellationToken);
+            // session是Marten的一个包，是用来存储/更新的，save the tokens into post db as a documemt object, ???? 关于document db和post db的关系
+            // 使用Marten可以将Postgre db转化成类似Document db的机制，就很方便。
+            return new CreateProductResult(product.Id);
         }
     }
 }
