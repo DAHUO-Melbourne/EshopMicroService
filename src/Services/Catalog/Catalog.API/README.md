@@ -7,3 +7,7 @@ Catalog.API文件就相当于是js项目的package.json, 所有的package/依赖
 MediatR用来管理command/query的service处理逻辑
 Carter是用来简化endpoint的
 Mapster是用来将object map到MediatR的ICommand上的
+
+backing service是那些不影响micro-service内部运行逻辑，但能够提供帮助，比如说db/cache等
+连接post db，需要添加docker-compose文件：到Catalog.API上，右键，add, container orchestrator support来添加docker-compose文件
+关于写docker compose yml文件，indentation非常关键，必须是nested的结构
