@@ -15,11 +15,11 @@ namespace Catalog.API.Products.GetProductById
                 var response = result.Adapt<GetProductByIdResponse>();
                 return Results.Ok(response);
             })
-            .WithName("GetProducts")
-            .Produces<GetProductResponse>(StatusCodes.Status200OK)
+            .WithName("GetProductById")
+            .Produces<GetProductByIdResponse>(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .WithSummary("Get Products")
-            .WithDescription("Get Products");
+            .WithSummary("Get Product By Id")
+            .WithDescription("Get Product By Id");
         }
     }
 }
