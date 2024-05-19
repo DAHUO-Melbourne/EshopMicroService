@@ -22,6 +22,7 @@
 
             session.Store(product);
             await session.SaveChangesAsync(cancellationToken);
+            // marten会检查数据库，如果数据库里没有schema/table，那么它就会新建一个table/schema
             // session是Marten的一个包，是用来存储/更新的，save the tokens into post db as a documemt object, ???? 关于document db和post db的关系
             // 使用Marten可以将Postgre db转化成类似Document db的机制，就很方便。
             return new CreateProductResult(product.Id);
