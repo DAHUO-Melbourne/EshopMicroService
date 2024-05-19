@@ -17,3 +17,4 @@ backing service是那些不影响micro-service内部运行逻辑，但能够提�
 	比如说：{{catalog_url}}/products
 
 69. 开发GetProductById 的handler
+70. 开发GetProductById 的endpoint
