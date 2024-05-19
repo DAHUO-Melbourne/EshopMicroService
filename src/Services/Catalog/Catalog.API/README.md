@@ -11,3 +11,7 @@ Mapster是用来将object map到MediatR的ICommand上的
 backing service是那些不影响micro-service内部运行逻辑，但能够提供帮助，比如说db/cache等
 连接post db，需要添加docker-compose文件：到Catalog.API上，右键，add, container orchestrator support来添加docker-compose文件
 关于写docker compose yml文件，indentation非常关键，必须是nested的结构
+
+68. 因为我们的app在本地以及docker的port number是不一样的，所以我们在使用postman测试的时候需要更改port number。为了不每次都手动修改port number
+	我们使用postman的collections和environment功能。我们可以把port number设置成variable，这样就可以很方便的切换生产环境。environment是用来存储不同环境下的常量/url的，collection则可以存储各种endpoint
+	比如说：{{catalog_url}}/products
