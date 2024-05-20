@@ -18,3 +18,9 @@ backing service是那些不影响micro-service内部运行逻辑，但能够提�
 
 69. 开发GetProductById 的handler
 70. 开发GetProductById 的endpoint
+82. 这一节课主要讲的是关于MediatR的另一个用途：关于pipeline的概念。pipeline相当于一个中间件，在将请求转发给handler之前，需要先进行一些process与verification，
+	这个时候就可以用到MediatR了，可以添加一些preprocessor behavior，而在handler处理完成之后，可以进行一些post processor behaviour。
+	比如说一个request可以经过好几个middle ware中间件，不同middleware通过next function连接，最后到达handler。
+	另一个库是fluent，是用来构建validation rules的框架。fluent和MediatR一般配合一起使用，可以将request通过中间件功能，在他们抵达handler之前进行验证。这些中间件的功能包括
+	velidation/logging/exception handling.我们最终安装的包是
+84. 为createProductHandler添加velidation，规则是验证这些参数不能为null
