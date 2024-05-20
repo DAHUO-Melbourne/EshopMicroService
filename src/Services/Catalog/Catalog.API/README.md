@@ -24,3 +24,5 @@ backing service是那些不影响micro-service内部运行逻辑，但能够提�
 	另一个库是fluent，是用来构建validation rules的框架。fluent和MediatR一般配合一起使用，可以将request通过中间件功能，在他们抵达handler之前进行验证。这些中间件的功能包括
 	velidation/logging/exception handling.我们最终安装的包是
 84. 为createProductHandler添加velidation，规则是验证这些参数不能为null
+    先新建一个CommandValidator class继承: AbstractValidator<CreateProductCommand>, 然后我们需要在handler class中传入IValidator<CreateProductCommand>
+	然后去program.cs里：注入依赖：builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
