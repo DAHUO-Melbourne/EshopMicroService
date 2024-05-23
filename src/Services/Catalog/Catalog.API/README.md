@@ -31,3 +31,4 @@ backing service是那些不影响micro-service内部运行逻辑，但能够提�
 86. 将CreateProductHandler里的IValidator删除，因为我们已经在Program中注册了config逻辑，它会自动检测Handler里的`AbstractValidator`, 然后添加到监听过程中，我们无需手动在handler里编写validator逻辑了
 	(with validator defined(`public class UpdateProductCommandValidator : AbstractValidator<UpdateProductCommand>`), our mediatr pipeline will automatically invoke them)
 87. 更新Update和Delete的validation逻辑
+88. globalExceptionHandling：因为throw出来的error看着太难看了，所以需要使用`globalExceptionHandling`让error msg看起来更易读: return a structured JSON response
