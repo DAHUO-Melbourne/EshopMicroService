@@ -17,21 +17,24 @@
     }
     // 1. 先新建一个CommandValidator class继承: AbstractValidator<CreateProductCommand>, 然后我们需要在handler class中传入IValidator<CreateProductCommand>
     internal class CreateProductCommandHandler
-        (IDocumentSession session, IValidator<CreateProductCommand> validator)
+        (IDocumentSession session,
+        // IValidator<CreateProductCommand> validator
+        ILogger<CreateProductCommandHandler> logger)
             : ICommandHandler<CreateProductCommand, CreateProductResult>
     // IDocumentSession是Marten的一个包，功能是和postgresql数据库进行交互，是数据库的一种抽象表示
     {
         public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
         {
-            var result = await validator.ValidateAsync(command, cancellationToken);
-            var errors = result.Errors.Select(x => x.ErrorMessage).ToList();
-            if (errors.Any())
-            {
-                throw new ValidationException(errors.FirstOrDefault());
-            }
+            // var result = await validator.ValidateAsync(command, cancellationToken);
+            // var errors = result.Errors.Select(x => x.ErrorMessage).ToList();
+            // if (errors.Any())
+            // {
+            //     throw new ValidationException(errors.FirstOrDefault());
+            // }
             // 1. create a product entity from command object
             // 2. save to database
             // 3. return result(which is a CreateProductResult object)
+            logger.LogInformation("CreateProductCommandHandler handler called with {@command}");
 
             var product = new Product
             {

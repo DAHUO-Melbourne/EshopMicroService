@@ -4,14 +4,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container,dependency injection, 先把不同的服务依赖注入到前半部分
 
-builder.Services.AddCarter();
+var assembly = typeof(Program).Assembly;
+
 builder.Services.AddMediatR(config =>
 {
-    config.RegisterServicesFromAssemblies(typeof(Program).Assembly);
+    config.RegisterServicesFromAssemblies(assembly);
     config.AddOpenBehavior(typeof(ValidationBehavior<,>));
 });
 
-builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
+builder.Services.AddValidatorsFromAssembly(assembly);
+
+builder.Services.AddCarter();
 
 builder.Services.AddMarten(opts => {
     opts.Connection(builder.Configuration.GetConnectionString("Database")!);

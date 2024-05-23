@@ -7,7 +7,7 @@ namespace BuildingBlocks.Behaviors
     public class ValidationBehavior<TRequest, TResponse>
         (IEnumerable<IValidator<TRequest>> validators)
         : IPipelineBehavior<TRequest, TResponse>
-        where TRequest : ICommand<IRequest>
+        where TRequest : ICommand<TResponse>
         // 做一下filter：表明只会对ICommand的request进行验证，而不会对IQuery进行验证
     {
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)

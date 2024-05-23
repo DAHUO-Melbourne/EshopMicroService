@@ -28,3 +28,4 @@ backing service是那些不影响micro-service内部运行逻辑，但能够提�
 	然后去program.cs里：注入依赖：builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 85. (1) 因为pipeline velidation是每个微服务都会用到的，因此我们将这些功能（logging/velidation等）统一拿出来放到BuildingBlocks里
 	(2) 完成相关逻辑之后，我们需要将`config.AddOpenBehavior(typeof(ValidationBehavior<,>));`注入到program中，意思是以后所有的mediatr验证都需要过一遍ValidatorBehavior的pipeline验证
+86. 将CreateProductHandler里的IValidator删除，因为我们已经在Program中注册了config逻辑，它会自动检测Handler里的`AbstractValidator`, 然后添加到监听过程中，我们无需手动在handler里编写validator逻辑了
