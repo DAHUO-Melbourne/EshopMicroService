@@ -26,3 +26,5 @@ backing service是那些不影响micro-service内部运行逻辑，但能够提�
 84. 为createProductHandler添加velidation，规则是验证这些参数不能为null
     先新建一个CommandValidator class继承: AbstractValidator<CreateProductCommand>, 然后我们需要在handler class中传入IValidator<CreateProductCommand>
 	然后去program.cs里：注入依赖：builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
+85. (1) 因为pipeline velidation是每个微服务都会用到的，因此我们将这些功能（logging/velidation等）统一拿出来放到BuildingBlocks里
+	(2) 完成相关逻辑之后，我们需要将`config.AddOpenBehavior(typeof(ValidationBehavior<,>));`注入到program中，意思是以后所有的mediatr验证都需要过一遍ValidatorBehavior的pipeline验证
