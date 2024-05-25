@@ -32,3 +32,5 @@ backing service是那些不影响micro-service内部运行逻辑，但能够提�
 	(with validator defined(`public class UpdateProductCommandValidator : AbstractValidator<UpdateProductCommand>`), our mediatr pipeline will automatically invoke them)
 87. 更新Update和Delete的validation逻辑
 88. globalExceptionHandling：因为throw出来的error看着太难看了，所以需要使用`globalExceptionHandling`让error msg看起来更易读: return a structured JSON response
+90. 在BuildingBlock里添加一个global的CustomExceptionHandler，在91里可以用来替换Program.cs里面的`globalExceptionHandling`，因为这个看起来更全面，更科学
+	通过添加`builder.Services.AddExceptionHandler<CustomExceptionHandler>();`以及`app.UseExceptionHandler(option => { });`

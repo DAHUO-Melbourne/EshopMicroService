@@ -14,7 +14,8 @@ public class CustomExceptionHandler
         logger.LogError(
             "Error Message: {exceptionMessage}, Time of occurrence {time}",
             exception.Message, DateTime.UtcNow);
-
+        // 这个CustomExceptionHandler会自动捕捉到exception
+        // 然后先用logger打印出exception的内容
         (string Detail, string Title, int StatusCode) details = exception switch
         {
             InternalServerException =>
@@ -48,6 +49,8 @@ public class CustomExceptionHandler
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError
             )
         };
+        // 根据exception的类型，返回message。name以及status code，并且赋值给一个叫details的变量
+        // 于是这个details变量包含了Detail，Title，StatusCode
 
         var problemDetails = new ProblemDetails
         {

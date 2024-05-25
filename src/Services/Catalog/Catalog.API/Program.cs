@@ -1,7 +1,4 @@
-using BuildingBlocks.Behaviors;
-using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using OpenTelemetry.Trace;
+using BuildingBlocks.Exceptions.Handler;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,37 +22,16 @@ builder.Services.AddMarten(opts => {
 // 这是marten连接数据库的逻辑。从AppSettings文件里读取Database变量
 // 而对于postgres db的使用：需要用到docker, docker-compose
 
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+// 注入CustomExceptionHandler依赖
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline，在后半部分：等到依赖注入完毕了，开始configuration不同的service
 
 app.MapCarter();
 
-app.UseExceptionHandler(exceptionHandlerApp =>
-{
-    exceptionHandlerApp.Run(async context =>
-    {
-        var exception = context.Features.Get<IExceptionHandlerFeature>()?.Error;
-        if (exception == null)
-        {
-            return;
-        }
-
-        var problemDetails = new ProblemDetails
-        {
-            Title = exception.Message,
-            Status = StatusCodes.Status500InternalServerError,
-            Detail = exception.StackTrace,
-        };
-
-        var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
-        logger.LogError(exception, exception.Message);
-
-        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-        context.Response.ContentType = "application/problem+json";
-
-        await context.Response.WriteAsJsonAsync(problemDetails);
-    });
-});
+app.UseExceptionHandler(option => { });
+// 对UseExceptionHandler进行config
 
 app.Run();
