@@ -34,3 +34,6 @@ backing service是那些不影响micro-service内部运行逻辑，但能够提�
 88. globalExceptionHandling：因为throw出来的error看着太难看了，所以需要使用`globalExceptionHandling`让error msg看起来更易读: return a structured JSON response
 90. 在BuildingBlock里添加一个global的CustomExceptionHandler，在91里可以用来替换Program.cs里面的`globalExceptionHandling`，因为这个看起来更全面，更科学
 	通过添加`builder.Services.AddExceptionHandler<CustomExceptionHandler>();`以及`app.UseExceptionHandler(option => { });`
+92. 因为每个Handler class里面都有Logger，所以我们也希望把Logger拿出来放进Pipeline里，就像validator一样。这一节的工作是create一个Logger class，将会记录所有的request与response
+	首先在bb的behavior folder里添加新的behavior（也是validatorBehavior的地方）,在文件夹中编写完新的逻辑之后：
+	添加在`program.cs`中`config.AddOpenBehavior(typeof(LoggingBehavior<,>));`

@@ -10,6 +10,8 @@ builder.Services.AddMediatR(config =>
 {
     config.RegisterServicesFromAssemblies(assembly);
     config.AddOpenBehavior(typeof(ValidationBehavior<,>));
+    config.AddOpenBehavior(typeof(LoggingBehavior<,>));
+    // 这段就是在给每个继承MediatR的handler添加具体的pipeline内容
 });
 
 builder.Services.AddValidatorsFromAssembly(assembly);
