@@ -9,6 +9,7 @@ namespace BuildingBlocks.Behaviors
         : IPipelineBehavior<TRequest, TResponse>
         where TRequest : notnull, IRequest<TResponse>
         where TResponse : notnull
+        // 这里是TRequest：包含了所有的ICommand和IQuery，都需要生成Logger
     {
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {

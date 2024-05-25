@@ -17,9 +17,10 @@
     }
     // 1. 先新建一个CommandValidator class继承: AbstractValidator<CreateProductCommand>, 然后我们需要在handler class中传入IValidator<CreateProductCommand>
     internal class CreateProductCommandHandler
-        (IDocumentSession session,
+        (IDocumentSession session
         // IValidator<CreateProductCommand> validator
-        ILogger<CreateProductCommandHandler> logger)
+        // ILogger<CreateProductCommandHandler> logger
+        )
             : ICommandHandler<CreateProductCommand, CreateProductResult>
     // IDocumentSession是Marten的一个包，功能是和postgresql数据库进行交互，是数据库的一种抽象表示
     {
@@ -34,7 +35,7 @@
             // 1. create a product entity from command object
             // 2. save to database
             // 3. return result(which is a CreateProductResult object)
-            logger.LogInformation("CreateProductCommandHandler handler called with {@command}");
+            // logger.LogInformation("CreateProductCommandHandler handler called with {@command}");
 
             var product = new Product
             {
