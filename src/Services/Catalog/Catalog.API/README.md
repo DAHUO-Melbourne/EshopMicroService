@@ -54,3 +54,38 @@ backing service是那些不影响micro-service内部运行逻辑，但能够提�
 	```
 	注意：`Marten`是用来操作数据库的库/MediatR是用来处理网络请求的库
 98. 添加health check
+99. 为了微服务的部署：我们需要将所有的微服务后端，和数据库一起部署到docker里。本地开发的话是本地电脑跑后端，docker包括了数据库。但是微服务部署的话需要将后端和数据库一起放到docker里
+	因此这一小节我们需要编写docker文件：
+	```
+	FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+	USER app
+	WORKDIR /app
+	EXPOSE 8080
+	EXPOSE 8081
+	```
+	这一段是设置docker运行环境：需要是.net8的环境
+	```
+	FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+	ARG BUILD_CONFIGURATION=Release
+	WORKDIR /src
+	COPY ["Services/Catalog/Catalog.API/Catalog.API.csproj", "Services/Catalog/Catalog.API/"]
+	COPY ["BuildingBlocks/BuildingBlocks/BuildingBlocks.csproj", "BuildingBlocks/BuildingBlocks/"]
+	RUN dotnet restore "./Services/Catalog/Catalog.API/./Catalog.API.csproj"
+	COPY . .
+	WORKDIR "/src/Services/Catalog/Catalog.API"
+	RUN dotnet build "./Catalog.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
+	```
+	这一段是设置需要构建的项目：catalog+buildingBlocks
+	```
+	FROM build AS publish
+	ARG BUILD_CONFIGURATION=Release
+	RUN dotnet publish "./Catalog.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+	```
+	这一段是设置publish
+	```
+	FROM base AS final
+	WORKDIR /app
+	COPY --from=publish /app/publish .
+	ENTRYPOINT ["dotnet", "Catalog.API.dll"]
+	```
+	set up the endpoint in order to run our application
