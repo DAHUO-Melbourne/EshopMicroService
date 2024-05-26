@@ -48,3 +48,8 @@ backing service是那些不影响micro-service内部运行逻辑，但能够提�
 	}
 	```
 	值得注意的是: 这个seeding function必须需要database启动：但是如果db没有正常启动呢？这个时候就需要我们使用其他的库来retry start db/docker中的db了
+96. 开发pagination：给GetProducts query加pagination，使用ToPagedListAsync方法，Marten只需要PageNumber和PageSize这两个参数：
+	```
+	theSession.Query<Target>().ToPagedList(pageNumber, pageSize)
+	```
+	注意：`Marten`是用来操作数据库的库/MediatR是用来处理网络请求的库
