@@ -118,3 +118,5 @@ backing service是那些不影响micro-service内部运行逻辑，但能够提�
 	docker containers on the same network can communicate with each other using the service names
 	此外：
 	`ConnectionStrings__Database`双下划线意味着overwrite connectionStrings in the appSettings
+	总的来说：每个微服务都有自己的docker文件：用于设置自己这个微服务在docker里的配置信息。
+	而最外面的docker-compose文件则用来对所有的docker文件进行统筹规划，确定不同docker文件之间的关系
