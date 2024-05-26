@@ -89,3 +89,32 @@ backing service是那些不影响micro-service内部运行逻辑，但能够提�
 	ENTRYPOINT ["dotnet", "Catalog.API.dll"]
 	```
 	set up the endpoint in order to run our application
+100	. 我们将会使用docker-compose文件来orchestrate（编排）所有的microservices+对应的db的communication。之前我们只用docker来运行数据库，现在我们要用docker来连接所有的微服务了
+	add container orchestrator support -> docker-compose.yml文件里会多出
+	```
+	catalog.api:
+    image: ${DOCKER_REGISTRY-}catalogapi
+    build:
+      context: .
+      dockerfile: Services/Catalog/Catalog.API/Dockerfile
+	```
+	override文件里：
+	```
+	ports:
+    - "6000:8080"
+    - "6060:8081"
+	```
+	这一部分是用于规定catalog在docker中用于收发网络请求的端口号
+	```
+    - ConnectionStrings__Database=Server=catalogdb;Port=5432;Database=CatalogDb;User Id=postgres;Password=postgres;Include Error Detail=true
+	```
+	这一部分用于设置在docker中与数据库连接的connection string，和appSettings里的一样
+	然后添加
+	```
+	depends_on:
+      - catalogdb
+	```
+	意思是catalog.api依赖于catalogdb
+	docker containers on the same network can communicate with each other using the service names
+	此外：
+	`ConnectionStrings__Database`双下划线意味着overwrite connectionStrings in the appSettings
