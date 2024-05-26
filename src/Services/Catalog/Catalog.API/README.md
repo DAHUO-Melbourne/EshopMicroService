@@ -53,3 +53,4 @@ backing service是那些不影响micro-service内部运行逻辑，但能够提�
 	theSession.Query<Target>().ToPagedList(pageNumber, pageSize)
 	```
 	注意：`Marten`是用来操作数据库的库/MediatR是用来处理网络请求的库
+98. 添加health check
