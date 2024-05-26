@@ -37,3 +37,14 @@ backing service是那些不影响micro-service内部运行逻辑，但能够提�
 92. 因为每个Handler class里面都有Logger，所以我们也希望把Logger拿出来放进Pipeline里，就像validator一样。这一节的工作是create一个Logger class，将会记录所有的request与response
 	首先在bb的behavior folder里添加新的behavior（也是validatorBehavior的地方）,在文件夹中编写完新的逻辑之后：
 	添加在`program.cs`中`config.AddOpenBehavior(typeof(LoggingBehavior<,>));`
+94. initialize seeding db: 初始化数据库并且添加一些必要的初始数据，就叫seeding DB。Marten提供了一个叫`IInitialData`的工具函数来完成这一目标.
+	具体逻辑是`session.Store(_initialData); await session.SaveChangesAsync()`
+	首先新建文件夹：Data，里面新建一个class叫CatalogInitialData
+	在完成相关逻辑之后, 在`Program.cs`中添加：
+	```
+	if (builder.Environment.IsDevelopment())
+	{
+		builder.Services.InitializeMartenWith<CatalogInitialData>();
+	}
+	```
+	值得注意的是: 这个seeding function必须需要database启动：但是如果db没有正常启动呢？这个时候就需要我们使用其他的库来retry start db/docker中的db了
