@@ -122,3 +122,9 @@ backing service是那些不影响micro-service内部运行逻辑，但能够提�
 	而最外面的docker-compose文件则用来对所有的docker文件进行统筹规划，确定不同docker文件之间的关系
 101. 如何跑docker-compose文件：在docker-compose右键 -> Open in Terminal：
 	`docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d`
+
+
+102. 介绍了一下basket ms的内容：
+	和catalog内容差不多，但是加了cache以及grpc和rabbit mq
+103. (1)新建basket文件夹
+	（2）右键->add new project->
