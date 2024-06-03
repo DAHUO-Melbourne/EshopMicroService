@@ -1,3 +1,5 @@
 104. 修改launchSettings.json文件来修改configuration
 105. basket主要是有两个数据来源：db和redis distributed cache
 107. create一个model folder，里面包含了basket的model
+121. 我来说一下.net连postgrasql的原理吧：连接数据库用的就是appSettings里的connectionString的信息
+	 但是如何根据connectionString里的信息启动对饮数据库呢？你需要根据connectionString里的数值编写对应的docker file，从而使用docker-compose来运行启动数据库的指令
