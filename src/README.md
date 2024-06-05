@@ -15,3 +15,8 @@
 	docker ps
 
 	docker logs basketdb
+
+127. 我们将会添加redis作为cache工具，来减少我们与db之间不必要的交互；这是一个key-value store，用于cache/session storage/pub-sub systems
+128. 讲了一下cache的原理: 
+	 首先：client 查找数据的时候，先查找一下Cache的数据；如果cache里有数据，就用cache里的数据respond to client
+	 但是如果cache里没有这一数据，则从db里查找数据，存储在cache中，然后再返回给client
