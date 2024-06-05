@@ -14,4 +14,4 @@ services:
 
 volumes:
   postgres_catalog:
-  basket_catalog:
+  postgres_basket:
