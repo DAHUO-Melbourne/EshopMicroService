@@ -1,3 +1,5 @@
+using BuildingBlocks.Exceptions.Handler;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // 在building以前进行依赖注入
@@ -21,9 +23,11 @@ builder.Services.AddMarten(opts =>
 
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+
 var app = builder.Build();
 
 // 在building以后进行config
 app.MapCarter();
-
+app.UseExceptionHandler(options => { });
 app.Run();
